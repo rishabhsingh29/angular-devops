@@ -2,7 +2,7 @@
 FROM node:14.19.0
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm install -g npm@8.5.0
 RUN npm run build
 CMD ls -ltr
 #stage 2
