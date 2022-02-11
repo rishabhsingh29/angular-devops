@@ -1,11 +1,10 @@
-#stage 1
-FROM node:14.19.0
+FROM node:14.17.0-alpine as build-step
+RUN mkdir -p /app
 WORKDIR /app
-COPY . .
-RUN npm install -g npm@8.5.0
-RUN npm i -g @angular/cli
-RUN npm run build
-CMD ls -ltr
-#stage 2
-FROM nginx:alpine
-COPY --from=node /app/dist/angular-devops /usr/share/nginx/html
+COPY package.json /app
+RUN npm install
+COPY . /app
+RUN npm run build --prod
+FROM nginx:1.20.1
+COPY --from=build-step /app/dist/angular-devops /usr/share/nginx/html
+EXPOSE 4200:80
