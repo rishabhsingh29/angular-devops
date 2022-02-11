@@ -3,6 +3,7 @@ FROM node:14.19.0
 WORKDIR /app
 COPY . .
 RUN npm install -g npm@8.5.0
+RUN npm i -g @angular/cli
 RUN npm run build
 CMD ls -ltr
 #stage 2
